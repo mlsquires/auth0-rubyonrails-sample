@@ -1,9 +1,9 @@
-# Session Handling
-[Full Tutorial](https://auth0.com/docs/quickstart/webapp/rails/03-session-handling)
+# Auth0 + Ruby on Rails WebApp Seed
+This is the seed project to create a regular web app with Ruby on Rails. If you want to build a Ruby On Rails API that will be used with a SPA or a Mobile device, please check this [other seed project](https://github.com/auth0/ruby-auth0/tree/master/examples/ruby-on-rails-api)
 
-This example shows how to store session data and cleanup the session on logout in your Rails application using the Auth0 Lock widget and the OmniAuth authentication system.
+You can learn more about this seed project in the [Auth0 Rails quickstart](https://auth0.com/docs/quickstart/webapp/rails).
 
-## Running the Sample Application
+# Running the Seed Application
 In order to run the example you need to have ruby installed.
 
 You also need to set the ClientSecret, ClientId, Domain and CallbackURL for your Auth0 app as environment variables with the following names respectively: `AUTH0_CLIENT_SECRET`, `AUTH0_CLIENT_ID`, `AUTH0_DOMAIN` and `AUTH0_CALLBACK_URL`.
@@ -26,25 +26,21 @@ __Note:__ If you are using Windows, uncomment the `tzinfo-data` gem in the gemfi
 
 ## Important Snippets
 
-### 1. Auth0 Lock Setup
-[Home Javascript Code](/01-Login/app/assets/javascripts/home.js.erb)
+### 1. Auth0 Hosted Login Page Setup
+[Home Controller Code](/00-Hosted-Login/app/controllers/home_controller.rb)
 ```ruby
-var options = {
-   auth: {
- 		redirectUrl: '<%= Rails.application.secrets.auth0_callback_url %>',
- 		params: {
- 			scope: 'openid name email picture'
- 		}
-   }
- };
-var lock = new Auth0Lock('<%= Rails.application.secrets.auth0_client_id %>', '<%= Rails.application.secrets.auth0_domain %>', options);
-
-function signin() {
- 	lock.show();
-}
+def login
+  request_params = {
+    client: Rails.application.secrets.auth0_client_id,
+    redirect_uri: Rails.application.secrets.auth0_callback_url
+  }
+  url = URI::HTTPS.build(host: Rails.application.secrets.auth0_domain, path: '/login', query: to_query(request_params))
+  redirect_to url.to_s
+end
 ```
+
 ### 2. Check if  User is Authenticated in Secured Controller Concern
-[Secured Controller Concern Code](/01-Login/app/controllers/concerns/secured.rb)
+[Secured Controller Concern Code](/00-Hosted-Login/app/controllers/concerns/secured.rb)
 ```ruby
 module Secured
   extend ActiveSupport::Concern
@@ -60,7 +56,7 @@ end
 ```
 
 ### 3. Store User Profile Upon Successful Authentication
-[Auth0 Controller Code](/01-Login/app/controllers/auth0_controller.rb)
+[Auth0 Controller Code](/00-Hosted-Login/app/controllers/auth0_controller.rb)
 ```ruby
 def callback
   # OmniAuth places the User Profile information (retrieved by omniauth-auth0) in request.env['omniauth.auth'].
@@ -79,32 +75,8 @@ def failure
 end
 ```
 
-### 4. Logout
-[Logout Controller Code](/01-Login/app/controllers/logout_controller.rb)
-```ruby
-def logout
-  reset_session
-  redirect_to logout_url.to_s
-end
-```
-
-### 5. Logout Helper
-[Logout Helper Code](/01-Login/app/helpers/logout_helper.rb)
-```ruby
-def logout_url
-  creds = { client_id: Rails.application.secrets.auth0_client_id,
-            client_secret: Rails.application.secrets.auth0_client_secret,
-            domain: Rails.application.secrets.auth0_domain,
-            token: Rails.application.secrets.auth0_token }
-  client = Auth0Client.new(creds)
-  client.logout_url(root_url)
-end
-```
-
-
 ## Used Libraries
 * [Auth0 Lock](https://github.com/auth0/lock)
-* [Auth0 Ruby SDK](https://github.com/auth0/ruby-auth0)
 * [OmniAuth](https://github.com/intridea/omniauth)
 * [OmniAuth Auth0 Strategy](https://github.com/auth0/omniauth-auth0)
 * [OmniAuth Oauth2](https://github.com/intridea/omniauth-oauth2)
