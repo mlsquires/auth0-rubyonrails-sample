@@ -1,0 +1,52 @@
+# Check this file into your source control system to
+# help other developers know what variables they
+# will need to work on the project.
+#
+# There is a trend toward using environment variables
+# to configure your application, rather than depending
+# on files checked in to source control. Heroku, Docker,
+# cloud vendors, etc typically provide this a part of
+# deploying your application.
+#
+# Check out this article for more details:
+# https://12factor.net/config
+#
+# Since our deployment mechanisms use environment variables
+# we want to use them when we're developing as well.
+#
+# But manually setting those variables can be cumbersome.
+# A common approach is to have a file in the project root
+# that contains the variables for our development environment,
+# and making use of a "dotenv" library for your project framework.
+#
+# You create a file (".env") in the root directory of your
+# project with the variables your app needs. Do NOT
+# check this into your source code repository.
+#
+# To help other developers work with your application
+# it helps to have a file ("dotenv.sample") that is
+# checked into your source code repository with
+# the variables defined but with bogus values.
+#
+# Perform any addition/deletion of keys in both ".env"
+# and "dotenv.sample".
+#
+# https://github.com/bkeepers/dotenv
+#
+# Note: There are times when you may want to do a "source .env"
+# in your shell to bring these into your environment at the
+# shell level. However, not all "dotenv" implementations support
+# the initial 'export' syntax. The shell "-a" option does an
+# export of all of the variables in the script. So an alias like this:
+#
+# alias senv='set -a; source .env; set +a'
+#
+# allows you to get them into your shell without breaking
+# a dotenv implementation
+#
+
+AUTH0_CLIENT_ID=BOGUS_ID
+AUTH0_DOMAIN=navigatingcare-staging02.auth0.com
+AUTH0_CLIENT_SECRET=BOGUS_SECRET
+AUTH0_CALLBACK_URL=http://node1.squiresconsulting.com/callback
+AUTH0_RETURN_TO=http://node1.squiresconsulting.com
