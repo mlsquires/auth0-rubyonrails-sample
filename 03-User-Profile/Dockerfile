@@ -9,7 +9,7 @@ RUN apt-get -y install vim zsh less curl telnet
 # RUN /bin/ls -lt /usr/local/bin
 # RUN /usr/bin/npm install -g yarn
 
-EXPOSE 3002
+EXPOSE 3001
 
 WORKDIR /tmp
 
