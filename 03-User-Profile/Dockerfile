@@ -1,10 +1,29 @@
-FROM ruby:2.3.3
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
-RUN mkdir /myapp
-WORKDIR /myapp
-ADD Gemfile /myapp/Gemfile
-ENV BUNDLER_VERSION 1.16.5
-RUN gem install bundler -v ${BUNDLER_VERSION} && bundle install --jobs 20 --retry 5
-ADD . /myapp
-CMD /myapp/bin/rails s -b 0.0.0.0
-EXPOSE 3000
+FROM ruby
+
+RUN apt-get update
+RUN apt-get -y install apt-utils
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get -y install nodejs
+RUN apt-get -y install vim zsh less curl telnet
+# RUN /bin/ls -lt /usr/bin
+# RUN /bin/ls -lt /usr/local/bin
+# RUN /usr/bin/npm install -g yarn
+
+EXPOSE 3002
+
+WORKDIR /tmp
+
+RUN gem install bundler
+
+COPY Gemfile Gemfile
+ADD Gemfile.lock Gemfile.lock
+RUN bundle config build.nokogiri --use-system-libraries
+RUN bundle install
+
+RUN mkdir /app
+
+ADD . /app
+WORKDIR /app
+
+CMD "./startup.sh"
+# CMD ["rails", "server", "-b", "0.0.0.0"]
