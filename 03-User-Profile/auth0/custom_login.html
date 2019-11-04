@@ -1,173 +1,235 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>CUSTOM - Sign In with Auth0</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>CUSTOM - Sign In with Auth0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
-  <style>
+<style>
     body, html {
-      height: 100%;
-      background-color: #f9f9f9;
+        height: 100%;
+        background-color: #f9f9f9;
     }
 
     .login-container {
-      position: relative;
-      height: 100%;
+        position: relative;
+        height: 100%;
     }
 
     .login-box {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 15px;
-      background-color: #fff;
-      box-shadow: 0px 5px 5px #ccc;
-      border-radius: 5px;
-      border-top: 1px solid #e9e9e9;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 15px;
+        background-color: #fff;
+        box-shadow: 0px 5px 5px #ccc;
+        border-radius: 5px;
+        border-top: 1px solid #e9e9e9;
     }
 
     .login-header {
-      text-align: center;
+        text-align: center;
     }
 
     .login-header img {
-      width: 75px;
+        width: 75px;
     }
 
     #error-message {
-      display: none;
+        display: none;
     }
-  </style>
+</style>
 <body>
-  <div class="login-container">
+<div class="login-container">
     <div class="col-xs-12 col-sm-4 col-sm-offset-4 login-box">
-      <div class="login-header">
-        <img src="https://cdn.auth0.com/styleguide/1.0.0/img/badge.svg"/>
-        <h3>Welcome</h3>
-        <h5>PLEASE LOG IN</h5>
-      </div>
-      <div id="error-message" class="alert alert-danger"></div>
-      <form onsubmit="return false;" method="post">
-        <div class="form-group">
-         <label for="name">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            placeholder="Enter your email">
+        <div class="login-header">
+            <img src="https://cdn.auth0.com/styleguide/1.0.0/img/badge.svg"/>
         </div>
-        <div class="form-group">
-          <label for="name">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            placeholder="Enter your password">
+        <div id="error-message" class="alert alert-danger"></div>
+        <div id="email_form" display="block">
+            <form onsubmit="return false;" method="post">
+                <div class="form-group">
+                    <label for="name">Email or userid</label>
+                    <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            placeholder="Enter your email or userid">
+                </div>
+                <button
+                        type="submit"
+                        id="email_submit"
+                        class="btn btn-primary btn-block">
+                    Next
+                </button>
+            </form>
         </div>
-        <button
-          type="submit"
-          id="btn-login"
-          class="btn btn-primary btn-block">
-            Log In
-        </button>
-        <button
-          type="button"
-          id="btn-signup"
-          class="btn btn-default btn-block">
-            Sign Up
-        </button>
-        <hr>
-        <button
-          type="button"
-          id="btn-google"
-          class="btn btn-default btn-danger btn-block">
-            Log In with Google
-        </button>
-      </form>
+        <div id="password_form" display="none">
+            <form onsubmit="return false;" method="post">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="name">Email or userid</label>
+                        <input
+                                type="email"
+                                class="form-control"
+                                id="email_display"
+                                disabled=true>
+
+                    </div>
+                </div>
+                <label for="name">Password</label>
+                <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        placeholder="Enter your password">
+                <button
+                        type="submit"
+                        id="password_submit"
+                        class="btn btn-primary btn-block">
+                    Login
+                </button>
+                <button
+                        type="submit"
+                        id="password_back"
+                        class="btn btn-primary btn-block">
+                    Back
+                </button>
+        </div>
+
+        </form>
     </div>
-  </div>
+</div>
+</div>
 
-  <!--[if IE 8]>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.5/ie8.js"></script>
-  <![endif]-->
+<!--[if IE 8]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.5/ie8.js"></script>
+<![endif]-->
 
-  <!--[if lte IE 9]>
-  <script src="https://cdn.auth0.com/js/polyfills/1.0/base64.min.js"></script>
-  <script src="https://cdn.auth0.com/js/polyfills/1.0/es5-shim.min.js"></script>
-  <![endif]-->
+<!--[if lte IE 9]>
+<script src="https://cdn.auth0.com/js/polyfills/1.0/base64.min.js"></script>
+<script src="https://cdn.auth0.com/js/polyfills/1.0/es5-shim.min.js"></script>
+<![endif]-->
 
-  <script src="https://cdn.auth0.com/js/auth0/9.11.2/auth0.min.js"></script>
-  <script src="https://cdn.auth0.com/js/polyfills/1.0/object-assign.min.js"></script>
-  <script>
-    window.addEventListener('load', function() {
+<script src="https://cdn.auth0.com/js/auth0/9.11.2/auth0.js"></script>
+<script src="https://cdn.auth0.com/js/polyfills/1.0/object-assign.min.js"></script>
+<script>
+    window.addEventListener('load', function () {
 
-      var config = JSON.parse(
-        decodeURIComponent(escape(window.atob('@@config@@')))
-      );
+        var config = JSON.parse(
+            decodeURIComponent(escape(window.atob('@@config@@')))
+        );
 
-      var params = Object.assign({
-        /* additional configuration needed for use of custom domains
-        overrides: {
-          __tenant: config.auth0Tenant,
-          __token_issuer: 'YOUR_CUSTOM_DOMAIN'
-        }, */
-        domain: config.auth0Domain,
-        clientID: config.clientID,
-        redirectUri: config.callbackURL,
-        responseType: 'code'
-      }, config.internalOptions);
+        var params = Object.assign({
+            /* additional configuration needed for use of custom domains
+            overrides: {
+              __tenant: config.auth0Tenant,
+              __token_issuer: 'YOUR_CUSTOM_DOMAIN'
+            }, */
+            domain: config.auth0Domain,
+            clientID: config.clientID,
+            redirectUri: config.callbackURL,
+            responseType: 'code'
+        }, config.internalOptions);
 
-      var webAuth = new auth0.WebAuth(params);
+        var webAuth = new auth0.WebAuth(params);
 
-      var databaseConnection = 'Username-Password-Authentication';
+        var defaultConnection = 'Username-Password-Authentication';
 
-      function login(e) {
-        e.preventDefault();
-        var username = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        webAuth.login({
-          realm: databaseConnection,
-          username: username,
-          password: password
-        }, function(err) {
-          if (err) displayError(err);
-        });
-      }
+        var commonOptions = {
+            response_type: 'code',
+            client_id: 'eHVxRliuj0DYlTZQgRtTPKB8aFjSwt47',
+            redirect_uri: 'http://test1.squiresconsulting.com/auth/auth0/callback'
+        }
 
-      function signup() {
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
+        var singleEmailAddresses = {
+            'michael@mlsquires.com': 'ExampleSamlIdp'
+        }
 
-        webAuth.redirect.signupAndLogin({
-          connection: databaseConnection,
-          email: email,
-          password: password
-        }, function(err) {
-          if (err) displayError(err);
-        });
-      }
+        var emailDomains = {
+            'gmail.com': 'google-oauth2',
+            'navigatingcancer.com': 'google-oauth2'
+        }
 
-      function loginWithGoogle() {
-        webAuth.authorize({
-          connection: 'google-oauth2'
-        }, function(err) {
-          if (err) displayError(err);
-        });
-      }
+        function emailEntered(e) {
+            var username = document.getElementById('email').value;
+            var segments = username.split('@');
+            var domain = segments[1];
+            var connection = singleEmailAddresses[username] || emailDomains[domain];
+            console.log(connection);
+            if (connection != null) {
+                var unique = {
+                    connection: connection,
+                    username: username
+                }
+                var options = {...commonOptions, ...unique}
+                webAuth.authorize(
+                    options,
+                    function (err) {
+                        if (err) displayError(err);
+                    });
+            }
+            document.getElementById("email_display").value = username;
+            switchForm(1);
+        }
 
-      function displayError(err) {
-        var errorMessage = document.getElementById('error-message');
-        errorMessage.innerHTML = err.description;
-        errorMessage.style.display = 'block';
-      }
+        function passwordEntered(e) {
+            var username = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
 
-      document.getElementById('btn-login').addEventListener('click', login);
-      document.getElementById('btn-google').addEventListener('click', loginWithGoogle);
-      document.getElementById('btn-signup').addEventListener('click', signup);
+            webAuth.login({
+                realm: defaultConnection,
+                username: username,
+                password: password
+            }, function (err) {
+                if (err) displayError(err);
+            });
+        }
+
+        function passwordBack(e) {
+            var username = document.getElementById('email_display').value;
+            document.getElementById("email").value = username;
+            switchForm(0);
+
+        }
+
+        function login(e) {
+            e.preventDefault();
+            var username = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            alert("login!");
+            webAuth.login({
+                realm: defaultConnection,
+                username: username,
+                password: password
+            }, function (err) {
+                if (err) displayError(err);
+            });
+        }
+
+        function switchForm(state) {
+            if (state == 0) {
+                document.getElementById("email_form").style.display = "block";
+                document.getElementById("password_form").style.display = "none";
+            } else {
+                document.getElementById("email_form").style.display = "none";
+                document.getElementById("password_form").style.display = "block";
+            }
+        }
+
+        function displayError(err) {
+            var errorMessage = document.getElementById('error-message');
+            errorMessage.innerHTML = err.description;
+            errorMessage.style.display = 'block';
+        }
+
+        document.getElementById('email_submit').addEventListener('click', emailEntered);
+        document.getElementById('password_submit').addEventListener('click', passwordEntered);
+        document.getElementById('password_back').addEventListener('click', passwordBack);
+        switchForm(0);
     });
-  </script>
+</script>
 </body>
 </html>
