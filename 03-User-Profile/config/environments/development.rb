@@ -36,4 +36,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Turn on structured logging
+  config.logger = Logger.new(STDOUT)
+  config.logger.formatter = Logger::Formatter.new
 end
