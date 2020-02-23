@@ -1,14 +1,22 @@
 <section class="jumbotron  text-center">
+  <% if @user[:info].nil? -%>
+    <h2>No 'info' key</h2>
+  <% else -%>
   <h2><img class="jumbo-thumbnail" src="<%= @user[:info][:image] %>"/></h2>
   <h1>Welcome, <%= @user[:info][:name] %></h1>
+<% end -%>
 </section>
 <section class="container">
+  <% if @user[:info].nil? -%>
+    <p>No 'info'</p>
+  <% else -%>
   <div class="panel panel-default">
     <div class="panel-heading">Normalized User Profile</div>
     <div class="panel-body">
       <pre><%= JSON.pretty_generate(@user[:info]) %></pre>
     </div>
   </div>
+<% end -%>
   <div class="panel panel-default">
     <div class="panel-heading">Full User Profile</div>
     <div class="panel-body">
@@ -19,12 +27,5 @@
     <div class="panel-heading">Everything</div>
     <div class="panel-body">
       <pre><%= JSON.pretty_generate(@user) %></pre>
-    </div>
-  </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">id_token</div>
-        <div class="panel-body">
-            <pre><%= JSON.pretty_generate(@user[:id_token]) %></pre>
-        </div>
     </div>
 </section>

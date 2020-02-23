@@ -1,4 +1,5 @@
 require 'json'
+require 'awesome_print'
 require 'jwt'
 
 class Auth0Controller < ApplicationController
@@ -7,11 +8,16 @@ class Auth0Controller < ApplicationController
     # In this tutorial, you will store that info in the session, under 'userinfo'.
     # If the id_token is needed, you can get it from session[:userinfo]['credentials']['id_token'].
     # Refer to https://github.com/auth0/omniauth-auth0#auth-hash for complete information on 'omniauth.auth' contents.
-    userinfo = JSON.load(request.env['omniauth.auth'])
-    id_token = userinfo['credentials']['id_token']
-    userinfo[:jwt] = JWT.decode(id_token,nil,false)
-
-    session[:userinfo] = JSON.pretty_generate(userinfo)
+    auth_hash = request.env['omniauth.auth']
+    Rails.logger.info %Q{auth0: #{self}.callback: auth_hash: #{auth_hash.class.name.inspect}, #{auth_hash.awesome_inspect}}
+    session[:userinfo] = auth_hash
+#     id_token = auth_hash['credentials']['id_token']
+#     decoded = JWT.decode(id_token,nil,false)
+#     Rails.logger.info %Q{auth0: #{self}.callback: decoded: #{decoded.awesome_inspect}}
+#     auth_hash[:jwt] = decoded
+#     Rails.logger.info %Q{auth0: #{self}.callback: auth_hash: #{auth_hash.awesome_inspect}}
+# 
+#     session[:userinfo] = JSON.pretty_generate(auth_hash)
 
     redirect_to '/dashboard'
   end

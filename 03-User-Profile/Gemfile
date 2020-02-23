@@ -20,6 +20,7 @@ gem 'omniauth', '= 1.4.2'
 gem 'omniauth-oauth2', '= 1.5.0'
 
 gem 'lograge'
+gem 'awesome_print'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
