@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/mlsquires/oauth2.git
-  revision: cb8eca28ec8b831833199cb4e60014cfc0bc4ac0
-  branch: 1-4-stable
+  revision: bed62a8189e21746dc37acf1ba6880aa4520af64
+  branch: 1-4-logging
   specs:
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
@@ -12,7 +12,7 @@ GIT
 
 GIT
   remote: https://github.com/mlsquires/omniauth-auth0.git
-  revision: 3c53c5fa9d4dfb31719e839a2cba7f45d775f98e
+  revision: 93a232139686737f6a7e140df6774c26b2c9e1e8
   branch: skip_info
   specs:
     omniauth-auth0 (2.2.0)

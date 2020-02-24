@@ -14,7 +14,7 @@ gem 'turbolinks', '~> 5'
 # OmniAuth strategy for authenticating with Auth0
 gem 'omniauth-auth0', git: 'https://github.com/mlsquires/omniauth-auth0.git', branch: 'skip_info'
 # gem 'omniauth-rails_csrf_protection', '~> 0.1'
-gem 'oauth2', git: 'https://github.com/mlsquires/oauth2.git', branch: '1-4-stable'
+gem 'oauth2', git: 'https://github.com/mlsquires/oauth2.git', branch: '1-4-logging'
 gem 'omniauth', '= 1.4.2'
 gem 'omniauth-oauth2', '= 1.5.0'
 
