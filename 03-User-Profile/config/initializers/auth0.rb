@@ -1,5 +1,9 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  scopes = %w[ ]
+  scopes = %w[openid email name]
+  skip_info = true
+  Rails.logger.info %Q{OmniAuth scopes: #{scopes.inspect}, skip_info: #{skip_info.inspect}}
+
+  ::OmniAuth::Strategies::Auth0.configure( { skip_info: skip_info } )
 
   provider(
     :auth0,
@@ -12,4 +16,3 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     }
   )
 end
-OmniAuth::Strategies::Auth0.configure( { skip_info: true } )
